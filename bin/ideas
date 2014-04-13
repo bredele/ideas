@@ -81,3 +81,19 @@ function toStamp (date) {
   return Math.floor(new Date(date).valueOf() / 1000);
 }
 
+
+// db.put(
+//     'dprk'
+//   , {
+//         name       : 'Kim Jong-un'
+//       , spouse     : 'Ri Sol-ju'
+//       , dob        : '8 January 1983'
+//       , occupation : 'Clown'
+//     }
+//   , function (err) {
+//       db.get('dprk', function (err, value) {
+//         console.log('dprk:', value)
+//         db.close()
+//       })
+//     }
+// )

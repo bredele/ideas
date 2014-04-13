@@ -16,7 +16,7 @@ You can list all the ideas with the `l` option:
 ```
 $ ideas -l
   1392707136:  do a cli to never loose my ideas
-  1392751800:  this is an ideas
+  1392751800:  this is an idea
 ```
 
 # Coming soon and ideas
