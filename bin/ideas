@@ -37,6 +37,9 @@ program.on('--help', function () {
   console.log('    # store an idea:');
   console.log('    $ ideas "this is an idea"');
   console.log();
+  console.log('    # list all ideas:');
+  console.log('    $ ideas -l');
+  console.log();  
 });
 
 
@@ -48,6 +51,7 @@ program.parse(process.argv);
 
 if(program.list) {
   console.log();
+  //note: we should strean with greater and lower 
   db.createReadStream()
     .on('error', function() {
       error('something weird happened');
