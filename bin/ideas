@@ -1,0 +1,79 @@
+#!/usr/bin/env node
+
+
+/**
+ * Module dependencies.
+ * @api private
+ */
+
+var program = require('commander');
+var level = require('level');
+var through = require('through');
+var db = level('./ideas', {
+  encoding: 'json' 
+});
+
+
+
+
+/**
+ * Usage.
+ */
+
+program
+  .version(require('../package.json').version)
+  .option('-l, --list', 'list all the ideas')
+  .usage('[<idea>]');
+
+
+
+/**
+ * Examples.
+ */
+
+program.on('--help', function () {
+  console.log('  Examples:');  
+  console.log();
+  console.log('    # store an idea:');
+  console.log('    $ ideas "this is an idea"');
+  console.log();
+});
+
+
+/**
+ * Parse.
+ */
+
+program.parse(process.argv);
+
+if(program.list) {
+  console.log();
+  db.createReadStream()
+    .on('error', function() {
+      error('something weird happened');
+    })
+    .pipe(through(function (row) {
+      log(row.key, row.value);
+    }))
+    .on('end', function() {
+      console.log();
+    });
+} else {
+  var idea = program.args[0];
+  var date = new Date();
+  db.put(toStamp(date), idea);
+}
+
+
+function log(stamp, msg){;
+  console.log('  \033[32m%s\033[m : \033[90m%s\033[m', stamp, msg);
+}
+
+function error(msg){
+  console.error('\033[31m%s\033[m : \033[90m%s\033[m', 'error', msg);
+}
+
+function toStamp (date) {
+  return Math.floor(new Date(date).valueOf() / 1000);
+}
+
